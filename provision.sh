@@ -1,40 +1,16 @@
 #!/bin/bash
 
-export DEBIAN_FRONTEND=noninteractive
-apt-get update && apt-get install -y --no-install-recommends\
-    apt-utils \
-    software-properties-common \
-    python-software-properties \
-    git \
-    kvm \
-    qemu-kvm \
-    libvirt-bin \
-    bridge-utils \
-    libguestfs-tools \
-    make \
-    wget
+docker-machine create kaller --driver packet --packet-api-key=$API_KEY --packet-os=ubuntu_16_04 --packet-project-id=$PROJECT --packet-facility-code "nrt1" --packet-plan "baremetal_1" --packet-spot-price-max "0.08"
+eval $(docker-machine env kaller)
 
-add-apt-repository -y ppa:gophers/archive
-apt-get update && apt-get install -y --no-install-recommends golang-1.9-go
-mkdir /root/go
+chmod +x host_env_setup.sh 
+docker-machine scp ./host_env_setup.sh root@kaller:~/
+docker-machine ssh root@kaller '~/host_env_setup.sh'
 
-export GOPATH="/root/go"
-export PATH="${PATH}:/usr/lib/go-1.9/bin"
+docker-machine scp FreeBSD-12.0-CURRENT-amd64.qcow2.xz root@kaller:~/
 
-go get -u -d github.com/google/syzkaller/...
-cd ~ && ln -s $GOPATH/src/github.com/google/syzkaller syzkaller
-cd ~/syzkaller && make manager fuzzer execprog TARGETOS=freebsd
-mkdir -p /root/workdir
-mkdir -p /root/.ssh
+chmod +x host_vm_setup.sh 
+scp ./host_vm_setup.sh root@kaller:~/
+ssh root@linux '~/host_vm_setup.sh'
 
-
-#if [ ! -e /dev/kvm ]; then
-#  mknod /dev/kvm c 10 $(grep '\<kvm\>' /proc/misc | cut -f 1 -d' ')
-#fi
-
-export DEBIAN_FRONTENT=teletype
-
-#get image from master machine
-# scp FreeBSD-12.0-CURRENT-amd64.qcow2 master:~/
-
-#qemu-system-x86_64 -m 2048 -hda FreeBSD-12.0-CURRENT-amd64.qcow2 -enable-kvm -netdev user,id=mynet0,host=10.0.2.10,hostfwd=tcp::10022-:22 -device e1000,netdev=mynet0 -nographic
+#run syzkaller
