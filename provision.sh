@@ -5,12 +5,12 @@ eval $(docker-machine env kaller)
 
 chmod +x host_env_setup.sh 
 docker-machine scp ./host_env_setup.sh root@kaller:~/
-docker-machine ssh root@kaller '~/host_env_setup.sh'
+docker-machine ssh kaller '~/host_env_setup.sh'
 
 docker-machine scp FreeBSD-12.0-CURRENT-amd64.qcow2.xz root@kaller:~/
 
 chmod +x host_vm_setup.sh 
-scp ./host_vm_setup.sh root@kaller:~/
-ssh root@linux '~/host_vm_setup.sh'
+docker-machine scp ./host_vm_setup.sh root@kaller:~/
+docker-machine ssh kaller '~/host_vm_setup.sh'
 
 #run syzkaller
