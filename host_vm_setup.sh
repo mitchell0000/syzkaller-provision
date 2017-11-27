@@ -1,11 +1,12 @@
 #!/bin/bash
 
 unxz FreeBSD-12.0-CURRENT-amd64.qcow2.xz
-qemu-system-x86_64 -m 2048 -hda FreeBSD-12.0-CURRENT-amd64.qcow2 -enable-kvm -netdev user,id=mynet0,host=10.0.2.10,hostfwd=tcp::10022-:22 -device e1000,netdev=mynet0 -nographic &
+
+qemu-system-x86_64 -m 2048 -net nic -net user,host=10.0.2.10,hostfwd=tcp::37865-:22 -display none -serial stdio -no-reboot -numa node,nodeid=0,cpus=0-1 -numa node,nodeid=1,cpus=2-3 -smp sockets=2,cores=2,threads=1 -enable-kvm -hda /root/FreeBSD-12.0-CURRENT-amd64.qcow2 &
 
 chmod +x ./bootstrap_img.sh
-scp -i ~/.ssh/kaller_key -P 10022 ./bootstrap_img.sh root@localhost:~/
-ssh -i ~/.ssh/kaller_key -P 10022 root@localhost '~/bootstrap_img.sh'
+scp -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -P 10022 ./bootstrap_img.sh root@localhost:~/
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -p 10022 root@localhost '~/bootstrap_img.sh'
 
-scp -i ~/.ssh/kaller_key -P 10022 root@localhost:~/syz-executor syzkaller/bin/freebsd_amd64/
-ssh -i ~/.ssh/kaller_key -P 10022 root@localhost 'poweroff'
+scp -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -P 10022 root@localhost:~/syz-executor ~/syzkaller/bin/freebsd_amd64/
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -p 10022 root@localhost 'poweroff'
