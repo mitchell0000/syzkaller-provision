@@ -11,7 +11,7 @@ chmod +x ~/provision/bootstrap_img.sh
 cp ~/provision/kaller_key ~/.ssh/kaller_key
 chmod 400 ~/.ssh/kaller_key
 
-c = 1
+c=1
 while [ $c -le 10 ]
 do
   scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -P 10022 ~/provision/bootstrap_img.sh root@localhost:~/
