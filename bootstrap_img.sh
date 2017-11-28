@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 env ASSUME_ALWAYS_YES=YES pkg bootstrap
 env ASSUME_ALWAYS_YES=YES pkg install git
 
