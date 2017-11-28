@@ -14,7 +14,9 @@ apt-get update && apt-get install -y --no-install-recommends\
     bridge-utils \
     libguestfs-tools \
     make \
-    wget
+    wget \
+    gcc \
+    g++
 
 add-apt-repository -y ppa:gophers/archive
 apt-get update && apt-get install -y --no-install-recommends golang-1.9-go
