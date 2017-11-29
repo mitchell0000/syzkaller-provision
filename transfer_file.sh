@@ -7,6 +7,6 @@ fi
 name=$1
 mkdir -p /tmp/"$name"
 while true; do
-  docker-machine scp -rp root@"$name":~/workdir/crashes/ /tmp/"$name"/
+  docker-machine scp -rdp root@"$name":~/workdir/crashes/ /tmp/"$name"/
   sleep 60
 done
