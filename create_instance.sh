@@ -1,6 +1,7 @@
 #!/bin/bash
 
-docker-machine create kaller --driver packet --packet-api-key=$API_KEY --packet-os=ubuntu_16_04 --packet-project-id=$PROJECT --packet-facility-code "nrt1" --packet-plan "baremetal_1" --packet-spot-price-max "0.08"
+name=${1:-kaller}
+docker-machine create "$name" --driver packet --packet-api-key=$API_KEY --packet-os=ubuntu_16_04 --packet-project-id=$PROJECT --packet-facility-code "nrt1" --packet-plan "baremetal_1" --packet-spot-price-max "0.08"
 eval $(docker-machine env kaller)
 
 
