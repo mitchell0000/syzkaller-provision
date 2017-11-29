@@ -66,4 +66,4 @@ docker-machine scp ./freebsd.cfg root@"$name":~/
 
 docker-machine ssh "$name" '~/syzkaller/bin/syz-manager -config ~/freebsd.cfg < /dev/null > /tmp/log 2>&1 &' 
 
-chmod +x ./transfer_file.sh && ./transfer_file.sh "$name"  < /dev/null > /dev/null 2>&1
+chmod +x ./transfer_file.sh && ./transfer_file.sh "$name"  < /dev/null > /dev/null 2>&1 &

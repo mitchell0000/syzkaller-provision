@@ -8,5 +8,5 @@ name=$1
 mkdir -p /tmp/"$name"
 while true; do
   docker-machine scp -r -d root@"$name":~/workdir/crashes/ /tmp/"$name"/
-  sleep 60
+  sleep 10
 done
