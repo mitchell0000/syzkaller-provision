@@ -11,6 +11,5 @@ go get -u -d $REPO_PATH/...
 cd ~ && ln -s $GOPATH/src/$REPO_PATH syzkaller
 cd ~/syzkaller && make manager fuzzer execprog TARGETOS=freebsd
 mkdir -p /root/workdir
-mkdir -p /root/.ssh
 
 echo "Syzkaller built."

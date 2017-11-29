@@ -8,6 +8,9 @@ qemu-system-x86_64 -m 2048 -net nic -net user,host=10.0.2.10,hostfwd=tcp::10022-
 ## need to fix qemu not running in background in script
 
 chmod +x ~/provision/bootstrap_img.sh
+if [ ! -d "/root/.ssh" ]; then
+  mkdir -p /root/.ssh
+fi
 cp ~/provision/kaller_key ~/.ssh/kaller_key
 chmod 400 ~/.ssh/kaller_key
 

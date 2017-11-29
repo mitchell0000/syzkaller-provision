@@ -19,3 +19,5 @@ echo "Instance created."
 
 
 docker-machine scp ./freebsd.cfg root@kaller:~/
+
+docker-machine ssh '~/syzkaller/bin/syz-manager -config ~/freebsd.cfg < /dev/null > /tmp/log 2>&1 &' 
