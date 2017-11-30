@@ -1,4 +1,9 @@
 #!/bin/bash
+
+if [ -z "$API_KEY" ]; then
+  echo "Missing API_KEY" >&2 
+fi
+
 name="kaller"
 facility="nrt1"
 plan="baremetal_1"
