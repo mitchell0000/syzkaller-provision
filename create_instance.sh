@@ -46,6 +46,7 @@ echo "Creating $name, at facility $facility, with plan $plan and max price $max.
 docker-machine create "$name" --driver packet --packet-api-key=$API_KEY --packet-os=ubuntu_16_04 --packet-project-id=$PROJECT --packet-facility-code "$facility" --packet-plan "$plan" --packet-spot-price-max "$max"
 
 if [[ ! $? -eq 0 ]]; then
+  docker-machine rm -f "$name"
   echo "Failed to create instance."
   exit 1
 fi

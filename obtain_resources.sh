@@ -5,7 +5,7 @@
 mkdir /root/go
 export GOPATH="/root/go"
 export PATH="${PATH}:/usr/lib/go-1.9/bin"
-export REPO_PATH="github.com/ScottieY/syzkaller"
+export REPO_PATH="github.com/google/syzkaller"
 
 go get -u -d $REPO_PATH/...
 cd ~ && ln -s $GOPATH/src/$REPO_PATH syzkaller

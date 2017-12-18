@@ -5,8 +5,13 @@ if [[ ! $1 ]];then
 fi
 
 name=$1
-mkdir -p /tmp/"$name"
+
+if [[ -d "/tmp/syzkaller/$name" ]]; then
+  rm -rf "/tmp/syzkaller/$name"
+fi
+
+mkdir -p /tmp/syzkaller/"$name"
 while true; do
-  docker-machine scp -r -d root@"$name":~/workdir/crashes/ /tmp/"$name"/
+  docker-machine scp -r -d root@"$name":~/workdir/crashes/ /tmp/syzkaller/"$name"/
   sleep 10
 done
