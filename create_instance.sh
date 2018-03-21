@@ -2,6 +2,7 @@
 
 if [ -z "$API_KEY" ]; then
   echo "Missing API_KEY" >&2 
+  exit 1
 fi
 
 name="kaller"
@@ -59,7 +60,7 @@ docker-machine ssh "$name" 'chmod +x ~/host_env_setup.sh && ./host_env_setup.sh'
 
 #start provision the linux host machine
 docker-machine scp ./FreeBSD-12.0-CURRENT-amd64.qcow2.xz root@"$name":~/
-docker-machine ssh "$name" 'git clone https://github.com/ScottieY/syzkaller-provision ~/provision'
+docker-machine ssh "$name" 'git clone https://github.com/mitchell0000/syzkaller-provision ~/provision'
 
 docker-machine ssh "$name" -t 'chmod +x ~/provision/obtain_resources.sh && ~/provision/obtain_resources.sh'
 

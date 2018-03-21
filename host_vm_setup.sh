@@ -19,12 +19,12 @@ while [ $c -le 10 ]
 do
   scp -o ConnectTimeout=10 -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -P 10022 ~/provision/bootstrap_img.sh root@localhost:~/
   if [ $? -eq 0 ]
-  then 
+  then
     break
   fi
   ((c++))
   sleep 10
-done 
+done
 
 ssh -o StrictHostKeyChecking=no -i ~/.ssh/kaller_key -p 10022 root@localhost '~/bootstrap_img.sh'
 
